@@ -1,0 +1,41 @@
+{
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "node ./src/cli.js hook",
+        "timeout": 30
+      }
+    ],
+    "beforeMCPExecution": [
+      {
+        "command": "node ./src/cli.js hook",
+        "timeout": 30
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "node ./src/cli.js hook",
+        "timeout": 30,
+        "matcher": "Write|Delete"
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "node ./src/cli.js hook",
+        "timeout": 30
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "node ./src/cli.js hook",
+        "timeout": 30
+      }
+    ],
+    "sessionStart": [
+      {
+        "command": "node ./src/cli.js hook",
+        "timeout": 30
+      }
+    ]
+  }
+}

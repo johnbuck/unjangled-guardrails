@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+// pre-commit topology guard — enforces the no-topology rule (AGENTS.md) on
+// staged ADDED lines only. Enable once per checkout:
+//   git config core.hooksPath .githooks
+//   node tools/topology-rules.mjs --init   (operator config; gitignored, never commits)
+//
+// - Clean staged change  -> exit 0.
+// - Added line matching a universal family or a configured operator pattern
+//   -> exit 1, naming file:line and the family; the matched text is NEVER
+//   echoed (house style, see vendor/secrets-guard-core/rules.mjs).
+// - evidence/** and _bmad-output/** are exempt; accepted residuals in
+//   tools/topology-rules.mjs pass; deletions never block.
+// - A broken operator config fails closed; a MISSING one still enforces the
+//   universal families and says so when a block fires.
+
+import { execFileSync } from "node:child_process";
+import { isExemptPath, loadOperatorConfig, parseAddedLines, scanLine } from "../tools/topology-rules.mjs";
+
+const diff = execFileSync(
+  "git",
+  ["diff", "--cached", "--unified=0", "--no-ext-diff", "--no-color", "--no-textconv"],
+  { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 },
+);
+
+const config = await loadOperatorConfig();
+if (config.error) {
+  console.error(`topology-guard: operator config failed to load: ${config.error}`);
+  console.error("topology-guard: fix .githooks/topology.local.mjs (or delete it — universal families work with no config); commit refused.");
+  process.exit(1);
+}
+
+const staged = parseAddedLines(diff).filter(({ path }) => !isExemptPath(path));
+const blocks = [];
+for (const { path, line, text } of staged) {
+  const family = scanLine(path, text, config);
+  if (family) blocks.push({ path, line, family });
+}
+
+if (blocks.length) {
+  console.error("topology-guard: BLOCKED commit — staged added lines match the no-topology rule (AGENTS.md):");
+  for (const b of blocks) console.error(`  topology-guard: ${b.path}:${b.line} — ${b.family}`);
+  console.error('  the matched text is not echoed. evidence/** and _bmad-output/** are exempt; anything else');
+  console.error('  needs a dated entry in the "Accepted residuals" record in docs/publishing.md — or must not commit.');
+  if (!config.present) {
+    console.error("  note: operator topology (hostnames, usernames, private URLs, ports) is NOT checked — no operator config found.");
+    console.error("  coverage: node tools/topology-rules.mjs --status   setup: node tools/topology-rules.mjs --init");
+  }
+  process.exit(1);
+}
+process.exit(0);

@@ -1,0 +1,19 @@
+{
+  "name": "unjangled-guardrails",
+  "version": "0.3.1",
+  "description": "Classifier-agent guardrail for the Pinkleberry homelab: local Jev-compatible brain (no cloud), operator rulings, offline-rules fallback. Denies destructive calls and credential exposure, flags AI-directed text in tool results.",
+  "settings": [
+    {
+      "name": "Local brain URL",
+      "description": "SYSTEMONE_URL of the local Jev-compatible service (e.g. the SemIf shim).",
+      "envVar": "SYSTEMONE_URL",
+      "sensitive": false
+    },
+    {
+      "name": "Local brain API key",
+      "description": "Bearer key for the local service when it requires one.",
+      "envVar": "SYSTEMONE_KEY",
+      "sensitive": true
+    }
+  ]
+}

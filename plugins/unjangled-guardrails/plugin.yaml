@@ -1,0 +1,10 @@
+name: unjangled-guardrails
+version: "0.1.0"
+description: "Auto-mode gate for Hermes: shells out to the unjangled-guardrails fork (node cli.js hook --agent hermes) so every non-read-only tool call is risk-scored by the local SemIf Jev-class backend before execution, and tool results are scanned for AI-directed (prompt-injection/canary) content. Denies block via pre_tool_call; injection findings are prepended to the model-visible result via transform_tool_result. Ask-level calls escalate to Hermes' human-approval gate via the approve directive when an approver is configured (else they deny). GUARD_FAIL_CLOSED decides behavior when the backend is down."
+author: "Pinkleberry homelab (Themis)"
+kind: standalone
+hooks:
+  - pre_tool_call
+  - post_tool_call
+  - transform_tool_result
+

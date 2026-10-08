@@ -1,0 +1,18 @@
+node_modules/
+.env
+.env.*
+logos/
+video/node_modules/
+video/out/
+.jev-key
+.zai-key
+.claude/settings.local.json
+.serena/
+.opencode/
+__pycache__/
+# operator rulings live here because GUARD_HOME points at this checkout on this host
+rulings.json
+rulings-use.jsonl
+_bmad/render/
+# operator-local topology values for the pre-commit guard (never commits)
+.githooks/topology.local.mjs
