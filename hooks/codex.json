@@ -1,0 +1,55 @@
+{
+  "description": "unjangled-guardrails: assess every tool call before it runs; scan every tool result for AI-directed instructions; remember prompts and flagged content per session.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${PLUGIN_ROOT}/src/cli.js\" hook --agent codex",
+            "timeout": 30,
+            "statusMessage": "unjangled-guardrails: assessing tool call"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${PLUGIN_ROOT}/src/cli.js\" hook --agent codex",
+            "timeout": 30,
+            "statusMessage": "unjangled-guardrails: scanning tool result"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${PLUGIN_ROOT}/src/cli.js\" hook --agent codex",
+            "timeout": 30,
+            "statusMessage": "unjangled-guardrails: noting prompt"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${PLUGIN_ROOT}/src/cli.js\" hook --agent codex",
+            "timeout": 30,
+            "statusMessage": "unjangled-guardrails: sweeping instruction files"
+          }
+        ]
+      }
+    ]
+  }
+}

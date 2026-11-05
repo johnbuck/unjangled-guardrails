@@ -1,0 +1,15 @@
+{
+  "name": "unjangled-guardrails",
+  "owner": {
+    "name": "leepokai"
+  },
+  "description": "unjangled-guardrails: a Jev-powered security hook that denies destructive tool calls, asks approval for risky ones, and flags prompt injection in tool results.",
+  "plugins": [
+    {
+      "name": "unjangled-guardrails",
+      "source": "./",
+      "description": "Prompt-injection and dangerous-action guard for coding agents, powered by Jev.",
+      "version": "0.3.1"
+    }
+  ]
+}
