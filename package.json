@@ -1,0 +1,76 @@
+{
+  "name": "unjangled-guardrails",
+  "version": "0.3.1",
+  "description": "Prompt-injection and dangerous-action guard for coding agents (Claude Code, Codex, pi, ACP), powered by Jev.",
+  "type": "module",
+  "bin": {
+    "unjangled-guardrails": "src/cli.js"
+  },
+  "exports": {
+    ".": "./src/opencode.js",
+    "./server": "./src/opencode.js",
+    "./guard": "./src/guard.js",
+    "./contract": "./src/contract.js",
+    "./jev": "./src/jev.js"
+  },
+  "files": [
+    "src",
+    "extensions",
+    "hooks",
+    "plugin.json",
+    "gemini-extension.json",
+    ".claude-plugin",
+    ".codex-plugin",
+    ".cursor-plugin",
+    ".agents",
+    "assets/icon.svg",
+    "assets/icon-512.png",
+    "assets/works-with.svg"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=20.3"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "peerDependenciesMeta": {
+    "@earendil-works/pi-coding-agent": {
+      "optional": true
+    }
+  },
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ]
+  },
+  "keywords": [
+    "jev",
+    "typesafe",
+    "prompt-injection",
+    "security",
+    "hooks",
+    "claude-code",
+    "codex",
+    "copilot",
+    "gemini-cli",
+    "cursor",
+    "pi-package",
+    "opencode-plugin",
+    "acp"
+  ],
+  "author": "leepokai",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnbuck/unjangled-guardrails.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/johnbuck/unjangled-guardrails",
+  "main": "src/opencode.js",
+  "bugs": "https://github.com/johnbuck/unjangled-guardrails/issues"
+}

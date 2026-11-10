@@ -1,0 +1,24 @@
+# Unjangled Push policy for this repository.
+#
+# The public mirror has require_cut set because this repository also
+# has a private remote, so the [cut] block below is mandatory: the
+# pushed history must have exactly one root.
+#
+# There are no exemptions: no existing hit on the public remote is a
+# clear false positive the guard can be told about safely, so every
+# hit is left for the operator to decide (rewrite, re-seed or
+# baseline). Existing history already on the remote is not re-judged
+# by a push; only new material is.
+#
+# This file loosens nothing at a public remote until its blob is
+# approved there with "unjangled-push policy approve <remote>".
+
+schema = 1
+min_guard_version = "0.1.0"
+term_list = "b1f7c229bf31bcb1d8ecbd1d41adf7a5"
+
+identity_allow = ["2216093+johnbuck@users.noreply.github.com"]
+
+[cut]
+single_root = true
+excluded_paths = []

@@ -1,0 +1,98 @@
+{
+  "description": "unjangled-guardrails: assess every tool call before it runs; scan every tool result for AI-directed instructions; remember the user's prompts and flagged content per session; sweep instruction files at session start. PreToolUse/PostToolUse/UserPromptSubmit/SessionStart/InstructionsLoaded serve Claude Code and Copilot CLI; BeforeTool/AfterTool/BeforeAgent serve Gemini CLI (its sweep runs on the first prompt); each host ignores the other's keys.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/src/cli.js\" hook",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/src/cli.js\" hook",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/src/cli.js\" hook",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/src/cli.js\" hook",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "InstructionsLoaded": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/src/cli.js\" hook",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "hooks": [
+          {
+            "name": "unjangled-guardrails",
+            "type": "command",
+            "command": "node \"${extensionPath}/src/cli.js\" hook",
+            "timeout": 30000
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "hooks": [
+          {
+            "name": "unjangled-guardrails",
+            "type": "command",
+            "command": "node \"${extensionPath}/src/cli.js\" hook",
+            "timeout": 30000
+          }
+        ]
+      }
+    ],
+    "BeforeAgent": [
+      {
+        "hooks": [
+          {
+            "name": "unjangled-guardrails",
+            "type": "command",
+            "command": "node \"${extensionPath}/src/cli.js\" hook",
+            "timeout": 30000
+          }
+        ]
+      }
+    ]
+  }
+}

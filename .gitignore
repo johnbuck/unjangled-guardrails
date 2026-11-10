@@ -1,0 +1,27 @@
+node_modules/
+.env
+.env.*
+logos/
+video/node_modules/
+video/out/
+.jev-key
+.zai-key
+.claude/settings.local.json
+.serena/
+.opencode/
+__pycache__/
+# local rulings store, when GUARD_HOME points at this checkout
+rulings.json
+rulings-use.jsonl
+_bmad/render/
+# operator-local topology values for the pre-commit guard (never commits)
+.githooks/topology.local.mjs
+
+# gate-home files that land here when GUARD_HOME points at this checkout
+decisions-candidates.jsonl
+decisions-allows.jsonl
+
+# the per-install policy store itself — the operator's guard-home env points at this
+# checkout (epic-rules-of-record entry 1, 2026-10-26), so the live store lands at the root;
+# it is the operator's real table and must never be committable
+user-policy.json

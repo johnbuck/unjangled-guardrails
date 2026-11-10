@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "readme": [
+    "Opt-in git-work policy — NEVER auto-applied, and NOT loaded by a bare `policy",
+    "adopt-defaults` either: nothing here loads until you adopt THIS file by name:",
+    "  unjangled-guardrails policy adopt-defaults examples/user-policy.git-work.json",
+    "(from the checkout root; on hosts without the bin: node <plugin-root>/src/cli.js",
+    "policy adopt-defaults <plugin-root>/examples/user-policy.git-work.json).",
+    "What it carries (operator rulings 2026-11-09): the two push entries that left",
+    "the suggested defaults (ruling 2a), and commit allows scoped to YOUR projects",
+    "folder (ruling 3) — the subagent mitigation, matching the folder the tool call",
+    "actually runs in (workdir-resolved project scope). A command allow lifts asks",
+    "AND brain denies for its shapes: adopt this only if you vouch for pushes and",
+    "in-folder commits on this install. Force and +refspec pushes still die at the",
+    "Always-Deny layer regardless.",
+    "PLACEHOLDER: the project:~/projects scope is a GENERIC EXAMPLE, never a real",
+    "path — this file is tracked and must carry no real operator path. Scope matching",
+    "is literal-prefix on the call's working directory, so the unedited placeholder",
+    "matches nothing, which is the safe direction. Substitute your absolute projects",
+    "folder (e.g. project:/home/you/projects or project:/Users/you/projects) in this",
+    "file before adopting, or fix the entries afterwards with policy remove +",
+    "policy add --effect allow --pattern 'git add *' --scope project:/your/abs/path.",
+    "Already adopted the pre-rework defaults? Adoption is additive and never",
+    "deletes: remove the moved entries by hand if you do not want them",
+    "(policy remove <id | pattern>)."
+  ],
+  "entries": [
+    { "kind": "command", "pattern": "git push", "effect": "allow", "scope": "global", "reason": "opt-in (ruling 2026-11-09): bare push of the current branch — this file is adopted by name, deliberately, or not at all" },
+    { "kind": "command", "pattern": "git push origin *", "effect": "allow", "scope": "global", "reason": "opt-in (ruling 2026-11-09): plain-refspec pushes; force and +refspec variants die at the Always-Deny layer before any entry is consulted" },
+    { "kind": "command", "pattern": "git add *", "effect": "allow", "scope": "project:~/projects", "reason": "folder-scoped commit work (ruling 3, 2026-11-09): the projects-folder mitigation — replace the ~/projects placeholder with your absolute folder, or this never matches" },
+    { "kind": "command", "pattern": "git commit *", "effect": "allow", "scope": "project:~/projects", "reason": "folder-scoped commit work (ruling 3, 2026-11-09): the projects-folder mitigation — replace the ~/projects placeholder with your absolute folder, or this never matches" }
+  ]
+}
